@@ -9,7 +9,7 @@ export const todoSlice = createSlice({
     initialState: {
         value: JSON.parse(localStorage.getItem("todos")) ?? [
             {
-                value: 'Welcome to todos-redux!',
+                value: 'Welcome to todolist-redux!',
                 checked: false,
                 date: null,
             },
