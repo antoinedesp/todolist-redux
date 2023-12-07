@@ -9,17 +9,17 @@ export const todoSlice = createSlice({
     initialState: {
         value: JSON.parse(localStorage.getItem("todos")) ?? [
             {
-                value: 'Aller a la piscine',
+                value: 'Welcome to todos-redux!',
                 checked: false,
                 date: null,
             },
             {
-                value: 'Manger une pizza',
+                value: 'Start by editing a task',
                 checked: false,
                 date: null,
             },
             {
-                value: 'Jouer au foot',
+                value: 'And removing those one',
                 checked: false,
                 date: null,
             },
