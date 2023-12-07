@@ -23,7 +23,6 @@ export const todoSlice = createSlice({
             state.value.push(action.payload);
         },
         markTodoAsDone: (state, action) => {
-            console.log(action.payload);
             let item = state.value.find((value) => {
                 return value.value === action.payload
             });
