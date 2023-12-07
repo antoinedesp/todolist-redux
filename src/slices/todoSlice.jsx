@@ -37,10 +37,19 @@ export const todoSlice = createSlice({
             if(item) {
                 item.checked = false;
             }
+        },
+        removeTodo: (state, action) => {
+            state.value = state.value.filter((value) => {
+               return !(value.value === action.payload);
+            });
         }
     }
-
 });
 
-export const { addTodo, markToDoAsUndone, markTodoAsDone } = todoSlice.actions;
+export const {
+    addTodo,
+    markToDoAsUndone,
+    markTodoAsDone,
+    removeTodo
+    } = todoSlice.actions;
 export default todoSlice.reducer;

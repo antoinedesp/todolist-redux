@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { markTodoAsDone, markToDoAsUndone} from "./slices/todoSlice.jsx";
+import { markTodoAsDone, markToDoAsUndone, removeTodo } from "./slices/todoSlice.jsx";
 
 export default function TodoItems({item}) {
 
@@ -18,6 +18,9 @@ export default function TodoItems({item}) {
         <div style={{textDecorationLine: item.checked === true ? 'line-through' : 'none' }} onClick={onCheckHandler}>
             <input type="checkbox" onChange={onCheckHandler} name="isChecked" checked={item.checked === true} />
             { item.value }
+            <button onClick={() => dispatch(removeTodo(item.value))}>
+                Delete
+            </button>
         </div>
     );
 }
