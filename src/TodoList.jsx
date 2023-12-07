@@ -1,28 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux";
+import { addTodo } from "./slices/todoSlice.jsx";
+import TodoItems from "./TodoItems.jsx";
+import TodoFilter from "./TodoFilter.jsx";
 
 export default function TodoList(props) {
 
-    const [listItems, setListItems] = useState([
-        {
-            value: 'Aller a la piscine',
-            checked: false,
-        },
-        {
-            value: 'Manger une pizza',
-            checked: false,
-        },
-        {
-            value: 'Jouer au foot',
-            checked: false,
-        },
-    ])
+    const dispatch = useDispatch();
 
+    const listItems = useSelector((state) => state.todo.value);
+    console.log(listItems);
     const [filteredListItems, setFilteredListItems] = useState([]);
     const [filterValue, setFilterValue] = useState('all');
     const [newTaskValue, setNewTaskValue] = useState('');
-
-    // const filterValue = useReduxblabla
 
     useEffect(() => {
         setFilteredListItems(listItems);
@@ -34,7 +25,7 @@ export default function TodoList(props) {
 
     function addTask() {
         if(newTaskValue === '') return;
-        setListItems([...listItems, { value: newTaskValue, checked: false }]);
+        dispatch(addTodo({ value: newTaskValue, checked: false }));
         setNewTaskValue('');
     }
 
@@ -65,70 +56,15 @@ export default function TodoList(props) {
         <>
             {
                 filteredListItems.map((listItem, key) => {
-                    return <ListItem key={key} item={listItem} markAsCompleted={() => listItem.checked = true} markAsUncompleted={() => listItem.checked = false} />
+                    return <TodoItems key={key} item={listItem}  />
                 })
             }
             <input name="newTask" type="text" onChange={newTaskTextChangedHandler}/>
             <input type="submit" onClick={addTask}/>
 
             <TodoFilter onFilterUpdateCallback={ setFilter }/>
-
         </>
     );
-
 }
 
-function ListItem({ item, markAsCompleted, markAsUncompleted }) {
 
-    const [isChecked, setIsChecked] = useState(item.checked);
-
-    function onCheckHandler() {
-        if(isChecked) {
-            markAsUncompleted();
-            setIsChecked(false);
-        }
-        else {
-            markAsCompleted();
-            setIsChecked(true);
-        }
-    }
-
-    return (
-        <div style={{textDecorationLine: isChecked ? 'line-through' : 'none' }} onClick={onCheckHandler}>
-            <input type="checkbox" onChange={onCheckHandler} name="isChecked" checked={isChecked} />
-            { item.value }
-        </div>
-    );
-}
-
-function TodoFilter({ onFilterUpdateCallback }) {
-
-    const [filter, setFilter] = useState('');
-
-    useEffect(() => {
-        setFilter('all');
-    }, []);
-
-    function onFilterUpdate(_filter) {
-        setFilter(_filter);
-        onFilterUpdateCallback(_filter);
-    }
-
-    return (
-        <>
-            <div>
-                <input type="checkbox" onChange={() => onFilterUpdate('all')} checked={filter === 'all'} name="all" id="all" />
-                All
-            </div>
-            <div>
-            <input type="checkbox" onChange={() => onFilterUpdate('done')} checked={filter === 'done'} name="done" id="done" />
-                Done
-            </div>
-            <div>
-            <input type="checkbox" onChange={() => onFilterUpdate('undone')} checked={filter === 'undone'} name="undone" id="undone" />
-                Undone
-            </div>
-        </>
-    );
-    
-}
