@@ -28,7 +28,7 @@ export default function TodoList() {
     }
 
     return (
-        <div>
+        <div className="flex flex-col space-y-2">
             {
                 listItems.map((listItem, key) => {
                     if (filterValue === 'all') {
@@ -41,23 +41,26 @@ export default function TodoList() {
                     }
                 })
             }
-            <div className="flex">
+            <div className="py-6 flex flex-col space-y-2">
+                <div className="flex space-x-2">
+                    <input
+                        className="flex items-center justify-center font-semibold text-slate-500 w-full py-4 px-8 border-2 rounded transition hover:bg-slate-300 focus:bg-slate-300 hover:text-slate-600 focus:text-slate-600 hover:border-slate-400 focus:border-slate-400"
+                        name="newTask"
+                        type="text"
+                        onChange={newTaskTextChangedHandler}/>
+
+                    <input
+                        className="flex items-center justify-center font-semibold text-slate-500 w-1/12 py-4 px-8 border-2 rounded transition hover:bg-slate-300 focus:bg-slate-300 hover:text-slate-600 focus:text-slate-600 hover:border-slate-400 focus:border-slate-400"
+                        type="submit"
+                        onClick={addTask}
+                        value="+"/>
+                </div>
                 <input
                     className="flex items-center justify-center font-semibold text-slate-500 w-full py-4 px-8 border-2 rounded transition hover:bg-slate-300 focus:bg-slate-300 hover:text-slate-600 focus:text-slate-600 hover:border-slate-400 focus:border-slate-400"
-                    name="newTask"
-                    type="text"
-                    onChange={newTaskTextChangedHandler}/>
-
-                <input
-                    className="flex items-center justify-center font-semibold text-slate-500 w-1/12 py-4 px-8 border-2 rounded transition hover:bg-slate-300 focus:bg-slate-300 hover:text-slate-600 focus:text-slate-600 hover:border-slate-400 focus:border-slate-400"
-                    type="submit"
-                    onClick={addTask}
-                    value="+"/>
+                    type="date"
+                    onChange={newTaskDateChangedHandler}/>
             </div>
-            <input
-                className="flex items-center justify-center font-semibold text-slate-500 w-full py-4 px-8 border-2 rounded transition hover:bg-slate-300 focus:bg-slate-300 hover:text-slate-600 focus:text-slate-600 hover:border-slate-400 focus:border-slate-400"
-                type="date"
-                onChange={newTaskDateChangedHandler}/>
+
             <TodoFilter/>
         </div>
     );
