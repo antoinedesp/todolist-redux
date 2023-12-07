@@ -7,14 +7,17 @@ export const todoSlice = createSlice({
             {
                 value: 'Aller a la piscine',
                 checked: false,
+                date: null,
             },
             {
                 value: 'Manger une pizza',
                 checked: false,
+                date: null,
             },
             {
                 value: 'Jouer au foot',
                 checked: false,
+                date: null,
             },
         ],
     },
