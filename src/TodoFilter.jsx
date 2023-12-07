@@ -1,17 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
+import {setFilter} from "./slices/todoFilterSlice.jsx";
+import {useDispatch, useSelector} from "react-redux";
 
-export default function TodoFilter({ onFilterUpdateCallback }) {
+export default function TodoFilter() {
 
-    const [filter, setFilter] = useState('');
-
-    useEffect(() => {
-        setFilter('all');
-    }, []);
+    const dispatch = useDispatch();
+    const filter = useSelector(state => state.todoFilter.value);
 
     function onFilterUpdate(_filter) {
-        setFilter(_filter);
-        // @TODO: set state todo filter state instead of
-        onFilterUpdateCallback(_filter);
+        dispatch(setFilter(_filter));
     }
 
     return (
@@ -30,5 +27,4 @@ export default function TodoFilter({ onFilterUpdateCallback }) {
             </div>
         </>
     );
-
 }

@@ -1,27 +1,16 @@
 import React from "react";
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import { addTodo } from "./slices/todoSlice.jsx";
 import TodoItems from "./TodoItems.jsx";
 import TodoFilter from "./TodoFilter.jsx";
 
-export default function TodoList(props) {
+export default function TodoList() {
 
     const dispatch = useDispatch();
-
+    const filterValue = useSelector((state) => state.todoFilter.value);
     const listItems = useSelector((state) => state.todo.value);
-    console.log(listItems);
-    const [filteredListItems, setFilteredListItems] = useState([]);
-    const [filterValue, setFilterValue] = useState('all');
     const [newTaskValue, setNewTaskValue] = useState('');
-
-    useEffect(() => {
-        setFilteredListItems(listItems);
-    }, [filterValue]);
-
-    useEffect(() => {
-        setFilter(filterValue);
-    }, [listItems]);
 
     function addTask() {
         if(newTaskValue === '') return;
@@ -33,36 +22,24 @@ export default function TodoList(props) {
         setNewTaskValue(e.target.value);
     }
 
-    function setFilter(newValue) {
-        switch(newValue) {
-            case 'all':
-                setFilterValue('all');
-                setFilteredListItems(listItems);
-                break;
-            case 'done':
-                setFilterValue('done');
-                setFilteredListItems(listItems.filter((listItem) => listItem.checked === true ));
-                break;
-            case 'undone':
-                setFilterValue('undone');
-                setFilteredListItems(listItems.filter((listItem) => listItem.checked === false ));
-                break;
-            default: 
-                break;
-        }
-    }
-
     return (
         <>
             {
-                filteredListItems.map((listItem, key) => {
-                    return <TodoItems key={key} item={listItem}  />
+                listItems.map((listItem, key) => {
+                    if(filterValue === 'all') {
+                        return <TodoItems key={key} item={listItem}  />
+                    }
+                    if(filterValue === 'done' && listItem.checked === true) {
+                        return <TodoItems key={key} item={listItem}  />
+                    }
+                    else if(filterValue === 'undone' && listItem.checked === false) {
+                        return <TodoItems key={key} item={listItem}  />
+                    }
                 })
             }
             <input name="newTask" type="text" onChange={newTaskTextChangedHandler}/>
             <input type="submit" onClick={addTask}/>
-
-            <TodoFilter onFilterUpdateCallback={ setFilter }/>
+            <TodoFilter/>
         </>
     );
 }

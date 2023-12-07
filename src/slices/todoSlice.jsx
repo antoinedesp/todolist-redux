@@ -32,7 +32,7 @@ export const todoSlice = createSlice({
             }
         },
         markToDoAsUndone: (state, action) => {
-            let item = state.value.find((value, position) => {
+            let item = state.value.find((value) => {
                 return value.value === action.payload;
             });
             if(item) {
